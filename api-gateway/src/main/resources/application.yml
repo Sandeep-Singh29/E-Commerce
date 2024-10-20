@@ -1,3 +1,6 @@
+jwt:
+  secretkey: khadkjfxnkmhdkzlmk456789hxdns87467rewunisy4678wuhxnjrfgcsi47rw93xiw3imsiwxhfin
+
 spring:
   application:
     name: api-gateway
@@ -12,14 +15,19 @@ spring:
             - Path=/api/v1/orders/**
           filters:
             - StripPrefix=2
-        #            - RedirectTo=302, http://linkedin.com
+            - name: LoggingOrderFilter
+            - name: Authentication
+              args:
+                isEnabled: true
+#           - RedirectTo=302, http://linkedin.com
         - id: inventory-service
           uri: lb://INVENTORY-SERVICE
           predicates:
             - Path=/api/v1/inventory/**
           filters:
             - StripPrefix=2
-#            - AddRequestHeader=X-Custom-Header, Anuj
+            - name: Authentication
+            - AddRequestHeader=X-Custom-Header, Sandeep
 eureka:
   client:
     service-url:
