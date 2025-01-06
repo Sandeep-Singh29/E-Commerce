@@ -1,34 +1,39 @@
-jwt:
-  secretkey: khadkjfxnkmhdkzlmk456789hxdns87467rewunisy4678wuhxnjrfgcsi47rw93xiw3imsiwxhfin
-
 spring:
   application:
     name: api-gateway
 
-  #api gateway config
-  cloud:
-    gateway:
-      routes:
-        - id: order-service
-          uri: lb://ORDER-SERVICE
-          predicates:
-            - Path=/api/v1/orders/**
-          filters:
-            - StripPrefix=2
-            - name: LoggingOrderFilter
-            - name: Authentication
-              args:
-                isEnabled: true
-#           - RedirectTo=302, http://linkedin.com
-        - id: inventory-service
-          uri: lb://INVENTORY-SERVICE
-          predicates:
-            - Path=/api/v1/inventory/**
-          filters:
-            - StripPrefix=2
-            - name: Authentication
-            - AddRequestHeader=X-Custom-Header, Sandeep
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+  config:
+    #in line:7 they are polling all the configuration by the congif server and config server is pull into github
+    import: configserver:http://localhost:8085
+
+
+#jwt:
+#  secretkey: pk4KmPSU1Q1Cvp8VGOP6g7ztKzNxXnNns027pQIYfdg3GWO7nNqL6Lg2YIN1GAY0jKOpZ579mfDKIjTS6HNKpA==
+#
+#  #api gateway config
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: order-service
+#          uri: lb://ORDER-SERVICE
+#          predicates:
+#            - Path=/api/v1/orders/**
+#          filters:
+#            - StripPrefix=2
+#            - name: LoggingOrderFilter
+#            - name: Authentication
+#              args:
+#                isEnabled: true
+##           - RedirectTo=302, http://linkedin.com
+#        - id: inventory-service
+#          uri: lb://INVENTORY-SERVICE
+#          predicates:
+#            - Path=/api/v1/inventory/**
+#          filters:
+#            - StripPrefix=2
+#            - name: Authentication
+#            - AddRequestHeader=X-Custom-Header, Sandeep
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
